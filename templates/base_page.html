@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+{% load static %}
+<html dir="ltr" lang="en-US">
+<head>
+
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+    <meta name="author" content="SemiColonWeb"/>
+
+    <!-- Stylesheets
+    ============================================= -->
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,400i,700|Poppins:300,400,500,600,700|PT+Serif:400,400i&display=swap"
+          rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}" type="text/css"/>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" type="text/css"/>
+    <link rel="stylesheet" href="{% static 'css/swiper.css' %}" type="text/css"/>
+    <link rel="stylesheet" href="{% static 'css/dark.css' %}" type="text/css"/>
+    <link rel="stylesheet" href="{% static 'css/font-icons.css' %}" type="text/css"/>
+    <link rel="stylesheet" href="{% static 'css/animate.css' %}" type="text/css"/>
+    <link rel="stylesheet" href="{% static 'css/magnific-popup.css' %}" type="text/css"/>
+
+    <link rel="stylesheet" href="{% static 'css/custom.css' %}" type="text/css"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="stylesheet"
+          href="{% static 'ckeditor/ckeditor/plugins/codesnippet/lib/highlight/styles/solarized_light.css' %}">
+    <script src="{% static 'ckeditor/ckeditor/plugins/codesnippet/lib/highlight/highlight.pack.js' %}"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    <!-- Document Title
+    ============================================= -->
+    <title>
+        {% block title %}
+        {% endblock title %}
+    </title>
+
+</head>
+
+<body class="stretched">
+
+<!-- Document Wrapper
+============================================= -->
+<div id="wrapper" class="clearfix">
+
+    <!-- Header
+    ============================================= -->
+    <header id="header" class="full-header transparent-header">
+        <div id="header-wrap">
+            <div class="container">
+                <div class="header-row">
+
+                    <!-- Logo
+                    ============================================= -->
+                    <div id="logo">
+                        <a href="{% url 'home' %} " class="standard-logo"
+                           data-dark-logo="{% static 'images/logo-dark.png' %}"><img
+                                src="{% static 'images/logo.png' %}" alt="Canvas Logo"></a>
+                        <a href="{% url 'home' %}" class="retina-logo"
+                           data-dark-logo="{% static 'images/logo-dark@2x.png' %}"><img
+                                src="{% static 'images/logo@2x.png' %}" alt="Canvas Logo"></a>
+                    </div><!-- #logo end -->
+
+                    <div class="header-misc">
+
+                        <!-- Top Search
+                        ============================================= -->
+                        <div id="top-search" class="header-misc-icon">
+                            <a href="#" id="top-search-trigger"><i class="icon-line-search"></i><i
+                                    class="icon-line-cross"></i></a>
+                        </div><!-- #top-search end -->
+
+                        <!-- Top Cart
+                        ============================================= -->
+                        {% if user.is_authenticated %}
+                            <div id="top-cart" class="header-misc-icon d-none d-sm-block">
+                                <a href="#" id="top-cart-trigger"><i class="icon-user"></i><span
+                                        class="top-cart-number">{{ user.username }}</span></a>
+                                <div class="top-cart-content">
+                                    <div class="top-cart-title">
+                                        <h4>Hello {{ user.username }}!</h4>
+                                    </div>
+                                    <div class="top-cart-action">
+                                        <a href="{% url 'logout' %}" class="button button-3d button-small m-0">Log
+                                            Out</a>
+                                        <a href="{% url 'post_new' %}" class="button button-3d button-small m-0">NEW
+                                            POST</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- #top-cart end -->
+                        {% else %}
+                            <div>
+                                <a href="{% url 'login' %}" class="button button-small mb-0">Log In</a>
+                            </div>
+                        {% endif %}
+                        <!-- #top-cart end -->
+
+                    </div>
+
+                    <div id="primary-menu-trigger">
+                        <svg class="svg-trigger" viewBox="0 0 100 100">
+                            <path d="m 30,33 h 40 c 3.722839,0 7.5,3.126468 7.5,8.578427 0,5.451959 -2.727029,8.421573 -7.5,8.421573 h -20"></path>
+                            <path d="m 30,50 h 40"></path>
+                            <path d="m 70,67 h -40 c 0,0 -7.5,-0.802118 -7.5,-8.365747 0,-7.563629 7.5,-8.634253 7.5,-8.634253 h 20"></path>
+                        </svg>
+                    </div>
+
+                    <!-- Primary Navigation
+                    ============================================= -->
+                    {% include 'primary_menu.html' %}
+                    <!-- #primary-menu end -->
+
+                    <form class="top-search-form" action="{% url 'search_result' %}" method="get">
+                        <input type="text" name="q" class="form-control" value="" placeholder="Type &amp; Hit Enter.."
+                               autocomplete="off">
+                    </form>
+
+                </div>
+            </div>
+        </div>
+        <div class="header-wrap-clone"></div>
+    </header><!-- #header end -->
+
+    <!-- Content
+============================================= -->
+    <section id="content">
+        <div class="content-wrap">
+            <div class="container clearfix">
+
+                <div class="row gutter-40 col-mb-80">
+                    <!-- Post Content
+                    ============================================= -->
+                    <div class="postcontent col-lg-9">
+
+                        <!-- Posts
+                        ============================================= -->
+                        <div id="posts" class="row grid-container gutter-30">
+                            {% block content %}
+                            {% endblock content %}
+                        </div><!-- #posts end -->
+                        <!-- Pager
+                        ============================================= -->
+                        <!-- .pager end -->
+                    </div><!-- .postcontent end -->
+
+                </div><!-- #wrapper end -->
+            </div>
+        </div>
+    </section>
+    <!-- Footer
+    ============================================= -->
+    {% include 'footer.html' %}
+    <!-- #footer end -->
+    <!-- Go To Top
+                    ============================================= -->
+    <div id="gotoTop" class="icon-angle-up"></div>
+
+    <!-- JavaScripts
+    ============================================= -->
+    <script src="{% static 'js/jquery.js' %}"></script>
+    <script src="{% static 'js/plugins.min.js' %}"></script>
+    <script type="text/javascript" src="{% static "ckeditor/ckeditor-init.js" %}"></script>
+    <script type="text/javascript" src="{% static "ckeditor/ckeditor/ckeditor.js" %}"></script>
+
+    <!-- Footer Scripts
+    ============================================= -->
+    <script src="{% static 'js/functions.js' %}"></script>
+</div>
+</body>
+</html>

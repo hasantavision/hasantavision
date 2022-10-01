@@ -1,0 +1,12 @@
+{% extends "base_page.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <form class="row" action="" method="post" >
+        {% csrf_token %}
+        {{ form.media }}
+        {{ form|crispy }}
+        <input type="submit" value="Save" name="landing-enquiry-submit"
+               class="btn w-100 text-white bg-color rounded-3 py-3 fw-semibold text-uppercase mt-2">
+    </form>
+{% endblock content %}

@@ -1,0 +1,22 @@
+{% extends 'base_page.html' %}
+
+{% block title %}
+    Tag
+{% endblock title %}
+
+{% block content %}
+    <h1>Tag Result</h1>
+    {% if post_list.count < 10 %}
+        <div>
+            <h3>Nothing found...</h3>
+        </div>
+    {% endif %}
+    {% for post in tag_list %}
+    <div>
+        <h3>
+            <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
+        </h3>
+            <p>{{ post.body|truncatewords:20|safe }}</p>
+    </div>
+    {% endfor %}
+{% endblock content %}

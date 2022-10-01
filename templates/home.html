@@ -1,0 +1,34 @@
+{% extends 'base_page.html' %}
+
+{% block title %}
+    Home
+{% endblock title %}
+
+{% block content %}
+{% for post in post_list %}
+    <div class="entry col-12">
+        <div class="grid-inner">
+            <div class="entry-title">
+                <h2><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h2>
+            </div>
+            <div class="entry-meta">
+                <ul>
+                    <li><i class="icon-calendar3"></i> {{ post.date }}</li>
+                    <li><a href="#"><i class="icon-user"></i> {{ post.author }}</a></li>
+                    <li><i class="icon-folder-open"></i>
+                        {% for tag in post.tags.all %}
+                            <a href="{% url 'tag_result' %}?t={{ tag }}">{{ tag }}</a>
+                        {% endfor %}
+                    </li>
+                    <li><a href="{{ post.get_absolute_url }}#comments"><i class="icon-comments"></i> {{ post.comment_set.count }} Comments</a></li>
+                    <li><a href="#"><i class="icon-camera-retro"></i></a></li>
+                </ul>
+            </div>
+            <div class="entry-content">
+                <p>{{ post.body|truncatewords:2|safe }}</p>
+                <a href="{{ post.get_absolute_url }}" class="more-link">Read More</a>
+            </div>
+        </div>
+    </div>
+{% endfor %}
+{% endblock %}
